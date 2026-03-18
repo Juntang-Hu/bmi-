@@ -19,7 +19,7 @@ namespace bmi計算機
 
         private void label3_Click(object sender, EventArgs e)
         {
-
+            //do nothing
         }
 
         private void btnRun_Click(object sender, EventArgs e)
@@ -77,7 +77,9 @@ namespace bmi計算機
             }
         }
 
+        private void fmBMI_Load(object sender, EventArgs e)
+        {
 
-
+        }
     }
 }
