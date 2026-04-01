@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace bmi計算機
 {
@@ -17,7 +18,14 @@ namespace bmi計算機
         private int speed = 8;        // 每幀移動的速度（數值越小越平滑）
         private Timer gameTimer;
         private bool btnstatus = false;
+        // 原本按鈕逃跑的 Timer
+        private Timer gameTimer2;
 
+        // 🌟 新增：專屬背景動畫的 Timer
+        private Timer bgTimer;
+
+        // 用來控制背景顏色的 RGB 變數
+        private int r = 255, g = 0, b = 0;
         public fmBMI()
         {
             InitializeComponent();
@@ -26,6 +34,43 @@ namespace bmi計算機
             gameTimer.Interval = 15; // 約 60 FPS
             gameTimer.Tick += GameTimer_Tick;
             gameTimer.Start();
+
+            // 初始化背景動畫 Timer
+            bgTimer = new Timer();
+            bgTimer.Interval = 5; // 每 50 毫秒更新一次顏色
+            bgTimer.Tick += BgTimer_Tick;
+            bgTimer.Start();
+        }
+        // 背景動畫的觸發事件
+        private void BgTimer_Tick(object sender, EventArgs e)
+        {
+            // 簡單的 RGB 漸變邏輯 (紅 -> 綠 -> 藍 -> 紅)
+            if (r > 0 && b == 0) { r -= 5; g += 5; }
+            if (g > 0 && r == 0) { g -= 5; b += 5; }
+            if (b > 0 && g == 0) { b -= 5; r += 5; }
+
+            // 確保數值在 0~255 的安全範圍內
+            r = Math.Max(0, Math.Min(255, r));
+            g = Math.Max(0, Math.Min(255, g));
+            b = Math.Max(0, Math.Min(255, b));
+
+            // 更新視窗的背景顏色
+            this.BackColor = Color.FromArgb(r, g, b);
+
+            int lb2x = label2.Location.X;
+            int lb2y = label2.Location.Y;
+            lb2x+=5;
+            if (lb2x > this.ClientSize.Width)
+                lb2x = 0;
+            label2.Location= new Point(lb2x, lb2y);
+            int lb3x = label3.Location.X;
+            int lb3y = label3.Location.Y;
+            lb3x += 5;
+            if (lb3x > this.ClientSize.Width)
+                lb3x = 0;
+            label3.Location = new Point(lb3x, lb3y);
+
+
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -96,6 +141,21 @@ namespace bmi計算機
         private void fmBMI_MouseMove(object sender, MouseEventArgs e)
         {
             
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblResult_MouseHover(object sender, EventArgs e)
+        {
 
         }
 

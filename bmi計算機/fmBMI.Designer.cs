@@ -40,6 +40,8 @@
             this.lblBMI = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.grpInput.SuspendLayout();
             this.grpOutput.SuspendLayout();
             this.SuspendLayout();
@@ -129,6 +131,7 @@
             this.lblResult.TabIndex = 3;
             this.lblResult.Text = " ";
             this.lblResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblResult.MouseHover += new System.EventHandler(this.lblResult_MouseHover);
             // 
             // lblBMI
             // 
@@ -155,11 +158,37 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("新細明體", 20F);
+            this.label2.Location = new System.Drawing.Point(3, 9);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(331, 40);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "BMI計算機🦭🦭🦭";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("新細明體", 20F);
+            this.label3.Location = new System.Drawing.Point(3, 626);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(331, 40);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "BMI計算機🦭🦭🦭";
+            this.label3.Click += new System.EventHandler(this.label3_Click_1);
+            // 
             // fmBMI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 675);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.grpOutput);
             this.Controls.Add(this.grpInput);
@@ -192,6 +221,8 @@
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
 
