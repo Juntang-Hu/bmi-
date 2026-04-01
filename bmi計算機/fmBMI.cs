@@ -12,9 +12,20 @@ namespace bmi計算機
 {
     public partial class fmBMI : Form
     {
+        private Point originalLocation;
+        private int threshold = 120; // 游標感應距離
+        private int speed = 8;        // 每幀移動的速度（數值越小越平滑）
+        private Timer gameTimer;
+        private bool btnstatus = false;
+
         public fmBMI()
         {
             InitializeComponent();
+            originalLocation = btnRun.Location;
+            gameTimer = new Timer();
+            gameTimer.Interval = 15; // 約 60 FPS
+            gameTimer.Tick += GameTimer_Tick;
+            gameTimer.Start();
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -78,6 +89,70 @@ namespace bmi計算機
         }
 
         private void fmBMI_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fmBMI_MouseMove(object sender, MouseEventArgs e)
+        {
+            
+
+        }
+
+        private void GameTimer_Tick(object sender, EventArgs e)
+        {
+            if (txtHeight.Text == "" || txtWeight.Text == "") 
+                btnstatus = false;
+            else
+                btnstatus = true;
+
+            if (btnstatus == true)
+            {
+                btnRun.Location = originalLocation;
+                return;
+            }
+
+            // 3. 取得滑鼠在 Form 上的相對位置
+            Point mousePos = this.PointToClient(Cursor.Position);
+
+            // 4. 計算按鈕中心點
+            Point btnCenter = new Point(
+                btnRun.Location.X + btnRun.Width / 2,
+                btnRun.Location.Y + btnRun.Height / 2
+            );
+
+            // 5. 計算距離
+            double distance = Math.Sqrt(Math.Pow(mousePos.X - btnCenter.X, 2) + Math.Pow(mousePos.Y - btnCenter.Y, 2));
+
+            // 6. 如果滑鼠靠近，計算逃跑路徑
+            if (distance < threshold)
+            {
+                int nextX = btnRun.Location.X;
+                int nextY = btnRun.Location.Y;
+
+                // 往滑鼠相反的方向平滑移動
+                if (mousePos.X < btnCenter.X) nextX += speed;
+                else nextX -= speed;
+
+                if (mousePos.Y < btnCenter.Y) nextY += speed;
+                else nextY -= speed;
+
+                // 7. 邊界判斷：如果超過邊界，就重置回原位
+                if (nextX < 0 || nextY < 0 ||
+                    nextX + btnRun.Width > this.ClientSize.Width ||
+                    nextY + btnRun.Height > this.ClientSize.Height)
+                {
+                    btnRun.Location = originalLocation;
+                }
+                else
+                {
+                    // 移動到新位置
+                    btnRun.Location = new Point(nextX, nextY);
+                }
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
         {
 
         }
